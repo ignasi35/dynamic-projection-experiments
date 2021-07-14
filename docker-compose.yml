@@ -1,0 +1,20 @@
+version: '2.2'
+services:
+  postgres-db:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: shopping-cart
+      POSTGRES_PASSWORD: shopping-cart
+
+  # this second PostgresSQL is used when running test
+  postgres-db-test:
+    image: postgres:latest
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_DB: shopping-cart
+      POSTGRES_USER: shopping-cart
+      POSTGRES_PASSWORD: shopping-cart
+
