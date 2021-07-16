@@ -1,19 +1,27 @@
 --DROP TABLE IF EXISTS public.event_journal;
 
 CREATE TABLE IF NOT EXISTS public.event_journal(
+  -- total ordering of the journal (used as offset, monotonically increasing, unique)
   ordering BIGSERIAL,
+  -- entity identifier ("type$id") and event ordering given a single entity
   persistence_id VARCHAR(255) NOT NULL,
   sequence_number BIGINT NOT NULL,
+
+  -- soft delete
   deleted BOOLEAN DEFAULT FALSE NOT NULL,
 
+  -- Writer identifies the process that did the write
   writer VARCHAR(255) NOT NULL,
   write_timestamp BIGINT,
+  -- ???
   adapter_manifest VARCHAR(255),
 
+  -- The event payload, and the serialiser metadata (name and version)
   event_ser_id INTEGER NOT NULL,
   event_ser_manifest VARCHAR(255) NOT NULL,
   event_payload BYTEA NOT NULL,
 
+  -- Used for extra payload (e.g. Replicated Event-Sourcing)
   meta_ser_id INTEGER,
   meta_ser_manifest VARCHAR(255),
   meta_payload BYTEA,

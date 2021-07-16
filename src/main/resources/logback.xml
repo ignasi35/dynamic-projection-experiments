@@ -12,6 +12,9 @@
         <appender-ref ref="STDOUT" />
     </appender>
 
+<!--    <logger name="slick" level="INFO" />-->
+<!--    <logger name="slick.jdbc" level="DEBUG" />-->
+
     <root level="INFO">
         <appender-ref ref="ASYNC"/>
     </root>

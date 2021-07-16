@@ -9,10 +9,10 @@
 
     # creates the tables needed for Akka Persistence
     # as well as the offset store table for Akka Projection
-    docker exec -i shopping-cart-service_postgres-db_1 psql -U shopping-cart -t < ddl-scripts/create_tables.sql
+    docker exec -i main_postgres-db_1 psql -U shopping-cart -t < ddl-scripts/create_tables.sql
     
     # creates the user defined projection table.
-    docker exec -i shopping-cart-service_postgres-db_1 psql -U shopping-cart -t < ddl-scripts/create_user_tables.sql
+    docker exec -i main_postgres-db_1 psql -U shopping-cart -t < ddl-scripts/create_user_tables.sql
     ```
 
 2. Start a first node:
@@ -24,9 +24,11 @@
 3. Try it with [grpcurl](https://github.com/fullstorydev/grpcurl):
 
     ```shell
-    # add item to cart
-    grpcurl -d '{"cartId":"cart1", "itemId":"hoodie", "quantity":5}' -plaintext 127.0.0.1:8101 shoppingcart.ShoppingCartService.AddItem
-   
+    # add items to carts
+    grpcurl -d '{"cartId":"cartid-123", "itemId":"hoodie", "quantity":5}' -plaintext 127.0.0.1:8101 shoppingcart.ShoppingCartService.AddItem     
+    # or use ./runner.sh to a big number of events on the DB
+
+
     # get popularity
     grpcurl -d '{"itemId":"hoodie"}' -plaintext 127.0.0.1:8101 shoppingcart.ShoppingCartService.GetItemPopularity
     ```
